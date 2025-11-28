@@ -6,9 +6,13 @@ as
 $$
 BEGIN
     RETURN QUERY
-    SELECT b.Barber_ID, b.First_Name, b.Sur_Name
+    SELECT
+        b.Barber_ID,
+        b.First_Name,
+        b.Sur_Name
     FROM Barber_Profile b
-    WHERE b.Company_ID = p_company_id;
+    WHERE b.Company_ID = p_company_id
+    AND b.Status = 'Active';
 END; $$;
 
 alter function show_barber(integer) owner to root;

@@ -6,12 +6,18 @@ $$
 DECLARE
     v_id INT;
     v_stored_hash VARCHAR;
+    v_status barber_status_type;
 BEGIN
-    SELECT Barber_ID, Password_Hash INTO v_id, v_stored_hash
+
+    SELECT Barber_ID, Password_Hash, Status INTO v_id, v_stored_hash, v_status
     FROM Barber_Profile
     WHERE Email = p_email;
 
     IF v_id IS NULL THEN
+        RETURN NULL;
+    END IF;
+
+    IF v_status != 'Active' THEN
         RETURN NULL;
     END IF;
 
