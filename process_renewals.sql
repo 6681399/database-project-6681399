@@ -1,5 +1,5 @@
 -- auto-generated definition
-create function process_daily_renewals() returns integer
+create function process_renewals() returns integer
     language plpgsql
 as
 $$
@@ -36,5 +36,5 @@ BEGIN
     RETURN v_renewed_count;
 END; $$;
 
-alter function process_daily_renewals() owner to root;
+alter function process_renewals() owner to root;
 

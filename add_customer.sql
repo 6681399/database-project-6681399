@@ -6,7 +6,12 @@ $$
 DECLARE v_id INT;
 BEGIN
     INSERT INTO Customer_Profile (Company_ID, First_Name, Sur_Name, Email, Phone_Number, Password_hash)
-    VALUES (p_company_id, p_first_name, p_last_name, p_email, p_phone, crypt(p_password, gen_salt('bf')))
+    VALUES (p_company_id,
+            p_first_name,
+            p_last_name,
+            p_email,
+            p_phone,
+            crypt(p_password, gen_salt('bf')))
     RETURNING Customer_ID INTO v_id;
     RETURN v_id;
 END; $$;
