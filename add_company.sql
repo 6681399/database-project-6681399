@@ -1,5 +1,5 @@
 -- auto-generated definition
-create function add_company(p_name character varying, p_phone character varying, p_open_time time without time zone, p_close_time time without time zone, p_email character varying, p_password character varying) returns integer
+create function add_company(p_name character varying, p_phone character varying, p_open_time time without time zone, p_close_time time without time zone, p_email character varying, p_password character varying, p_address character varying) returns integer
     language plpgsql
 as
 $$
@@ -11,7 +11,8 @@ BEGIN
         Open_Time,
         Close_Time,
         Company_Email,
-        Company_Password_Hash
+        Company_Password_Hash,
+        address
     )
     VALUES (
         p_name,
@@ -19,12 +20,13 @@ BEGIN
         p_open_time,
         p_close_time,
         p_email,
-        crypt(p_password, gen_salt('bf'))
+        crypt(p_password, gen_salt('bf')),
+        p_address
     )
     RETURNING Company_ID INTO v_id;
 
     RETURN v_id;
 END; $$;
 
-alter function add_company(varchar, varchar, time, time, varchar, varchar) owner to root;
+alter function add_company(varchar, varchar, time, time, varchar, varchar, varchar) owner to root;
 
