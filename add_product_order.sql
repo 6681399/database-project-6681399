@@ -6,14 +6,23 @@ $$
 DECLARE
     v_id INT;
     v_current_price DECIMAL(10,2);
+    v_current_stock INT;
 BEGIN
-    SELECT Price INTO v_current_price
+    SELECT Price, stock_count INTO v_current_price, v_current_stock
     FROM Shop_Products
     WHERE Product_ID = p_product_id;
 
     IF v_current_price IS NULL THEN
         RAISE EXCEPTION 'Product ID % not found', p_product_id;
     END IF;
+
+    IF v_current_stock < p_amount THEN
+        RAISE EXCEPTION 'Not enough stock. Current: %, Requested: %', v_current_stock, p_amount;
+    END IF;
+
+    UPDATE Shop_Products
+    SET stock_count = stock_count - p_amount
+    WHERE Product_ID = p_product_id;
 
     INSERT INTO Product_Order_Record (
         Reservation_ID,
